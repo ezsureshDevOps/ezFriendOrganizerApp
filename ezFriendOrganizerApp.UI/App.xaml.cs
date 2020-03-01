@@ -1,5 +1,5 @@
-﻿using ezFriendOrganizerApp.UI.DataService;
-using ezFriendOrganizerApp.UI.ViewModel;
+﻿using Autofac;
+using ezFriendOrganizerApp.UI.Startup;
 using System.Windows;
 
 namespace ezFriendOrganizerApp.UI
@@ -11,10 +11,11 @@ namespace ezFriendOrganizerApp.UI
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            var mainWindow = new MainWindow(
-                new MainViewModel(
-                new FriendDataService())
-            );
+            var bootstrapper = new Bootstrapper();
+            var container = bootstrapper.Bootstrap();
+
+            var mainWindow = container.Resolve<MainWindow>();
+            
             mainWindow.Show();
         }
     }
